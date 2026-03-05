@@ -40,3 +40,22 @@
 .read-the-docs {
   color: #888;
 }
+
+.input-wrapper {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-block-end: 2rem;
+}
+
+.input-wrapper input {
+  min-width: 1000px;
+  padding: .5rem;
+}
+
+.link-wrapper {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}

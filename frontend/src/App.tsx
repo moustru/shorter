@@ -1,33 +1,37 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { httpInstance } from './axios.config'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [link, setLink] = useState('')
+  const [newLink, setNewLink] = useState('')
+
+  const generate = async () => {
+    const res = await httpInstance.post('/link', { link })
+
+    setNewLink(res.data.link);
+  }
+
+  const copyLink = () => {
+    navigator.clipboard.writeText(newLink);
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <h1>Link Shorter</h1>
+
+      <div className="input-wrapper">
+        <input value={link} onChange={(e) => setLink(e.currentTarget.value)} />
+        <button onClick={generate}>Получить ссылку</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      {newLink && 
+        <div className="link-wrapper">
+          <a href={newLink} target='_blank' rel="nofollow">{newLink}</a>
+          <button onClick={copyLink}>Скопировать ссылку</button>
+        </div>
+      }
+
     </>
   )
 }

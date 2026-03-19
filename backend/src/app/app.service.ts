@@ -20,7 +20,8 @@ export class AppService {
 
     const newLink = REDIRECT_PREFIX + nanoid(10);
 
-    // Создаем 2 записи - с ключом оригинального урла и сгенерированного. Это позволит нам искать записи с обеих сторон
+    // Создаем 2 записи - с ключом оригинального урла и сгенерированного.
+    // Это позволит нам искать записи с обеих сторон
     await Promise.all([
       this.redisService.set(link, newLink, LINK_TTL),
       this.redisService.set(newLink, link, LINK_TTL),
